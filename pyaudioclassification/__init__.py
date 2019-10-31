@@ -27,7 +27,7 @@ def train(features, labels, type='cnn', num_classes=None, print_summary=False,
     - loss_type: Classification type. Default is categorical for >2 classes, and binary otherwise.
     """
     labels = labels.ravel()
-    if num_classes == None: num_classes = np.max(labels, axis=0)
+    if num_classes == None: num_classes = np.max(labels, axis=0) + 1
 
     model = getattr(models, type)(num_classes)
     if print_summary == True: model.summary()
@@ -71,5 +71,5 @@ def print_leaderboard(pred, data_path):
     sorted = np.argsort(pred)
     count = 0
     for index in (-pred).argsort()[0]:
-        print('%d.' % (count + 1), r[index + 1], str(round(pred[0][index]*100)) + '%', '(index %s)' % index)
+        print('%d.' % (count + 1), r[index], str(round(pred[0][index]*100)) + '%', '(index %s)' % index)
         count += 1
